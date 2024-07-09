@@ -10,14 +10,15 @@ export class AuthController {
     signup(
        @Body() dto: AuthDto,
     ) {
-        console.log({dto});
-        return this.authService.singup();
+        return this.authService.singup(dto);
     }
 
     // signup(@Req() req: Request) // It's bad because we can switch to fastify and everything will break :(
 
     @Post('signin')
-    signin() {
-        return this.authService.signin();
+    signin(
+        @Body() dto: AuthDto,
+    ) {
+        return this.authService.signin(dto);
     }
 }
