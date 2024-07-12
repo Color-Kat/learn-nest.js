@@ -1,4 +1,4 @@
-import { Body, Controller, ParseIntPipe, Post } from "@nestjs/common";
+import { Body, Controller, HttpCode, HttpStatus, ParseIntPipe, Post } from "@nestjs/common";
 import { AuthService } from "./auth.service";
 import { AuthDto } from "./dto";
 
@@ -16,6 +16,7 @@ export class AuthController {
     // signup(@Req() req: Request) // It's bad because we can switch to fastify and everything will break :(
 
     @Post('signin')
+    @HttpCode(HttpStatus.OK)
     signin(
         @Body() dto: AuthDto,
     ) {
