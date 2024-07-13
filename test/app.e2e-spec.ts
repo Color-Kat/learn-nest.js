@@ -5,6 +5,7 @@ import { NestApplication } from "@nestjs/core";
 import { PrismaService } from "../src/prisma/prisma.service";
 import * as pactum from "pactum";
 import { AuthDto } from "../src/auth/dto";
+import { EditUserDto } from "../src/user/dto";
 
 describe('App e2e', () => {
     let app: NestApplication;
@@ -139,7 +140,25 @@ describe('App e2e', () => {
         });
 
         describe('Edit user', () => {
-
+            it('Should edit user', () => {
+                const editUserDto: EditUserDto = {
+                    email: 'b@b.com',
+                    firstName: 'b',
+                    lastName: 'b'
+                }
+                return pactum
+                    .spec()
+                    .patch('/users/edit-user')
+                    .withHeaders({
+                        Authorization: `Bearer $S{userAccessToken}`
+                    })
+                    .withBody(editUserDto)
+                    .expectStatus(200)
+                    .expectBodyContains(editUserDto.email)
+                    .expectBodyContains(editUserDto.firstName)
+                    .expectBodyContains(editUserDto.lastName)
+                    ;
+            });
         });
     });
 
@@ -156,11 +175,11 @@ describe('App e2e', () => {
 
         });
 
-        describe('Edit bookmark', () => {
+        describe('Edit bookmark by id', () => {
 
         });
 
-        describe('Delete bookmark', () => {
+        describe('Delete bookmark by id', () => {
 
         });
     });
